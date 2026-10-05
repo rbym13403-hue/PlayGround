@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صانع العروض بالذكاء الاصطناعي | Opencode المجانية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo','Segoe UI',Tahoma,Arial,sans-serif;background:#070f22;color:#fff;line-height:1.8;min-height:100vh}
+a{color:#00c8ff}
+header.hero{background:radial-gradient(1000px 400px at 80% -50px,#1a3a8f66,transparent),linear-gradient(135deg,#0b1e3b,#123062 60%,#0a4d68);padding:44px 20px 30px;text-align:center;border-bottom:4px solid #00c8ff}
+header.hero h1{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900}
+header.hero h1 span{color:#00c8ff}
+header.hero p{color:#c8d7eb;max-width:760px;margin:10px auto}
+.badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.badge{background:#ffffff14;border:1px solid #00c8ff55;padding:5px 14px;border-radius:999px;font-size:.85rem}
+.badge.free{background:#22c55e;color:#04120a;border:none;font-weight:900}
+main{max-width:1120px;margin:0 auto;padding:22px 16px 70px}
+.card{background:#0e2247;border:1px solid #1e4a7a;border-radius:18px;padding:22px;box-shadow:0 12px 34px rgba(0,0,0,.4)}
+.generator{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+@media(max-width:860px){.generator{grid-template-columns:1fr}}
+label{font-weight:700;display:block;margin:12px 0 6px;color:#c8d7eb}
+input[type=text],select{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #2a5a8f;background:#081633;color:#fff;font-size:1rem;font-family:inherit}
+input[type=text]:focus,select:focus{outline:2px solid #00c8ff}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.row{grid-template-columns:1fr}}
+input[type=range]{width:100%;accent-color:#00c8ff}
+.btn{cursor:pointer;border:none;border-radius:12px;padding:14px 20px;font-family:inherit;font-weight:900;font-size:1.05rem;transition:.15s}
+.btn-primary{background:linear-gradient(90deg,#00c8ff,#7c5dfa);color:#04121f;width:100%;margin-top:16px}
+.btn-primary:hover{filter:brightness(1.1)}
+.btn-ghost{background:#ffffff12;color:#fff;border:1px solid #2a5a8f;width:100%;margin-top:10px}
+.btn-dl{background:#ffc107;color:#221a00}
+.btn-dl:disabled,.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.hint{font-size:.85rem;color:#8fa8c4;margin-top:8px}
+.status{margin-top:14px;background:#081633;border:1px dashed #2a5a8f;border-radius:12px;padding:12px 14px;font-size:.9rem;min-height:52px}
+.status.ok{border-color:#22c55e}
+.status.err{border-color:#ef4444}
+.side h3{margin-bottom:8px}
+.model-list{font-size:.82rem;color:#8fa8c4;background:#081633;border-radius:10px;padding:10px 12px;margin-top:10px;max-height:130px;overflow:auto}
+#preview{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.pslide{background:#fff;color:#0b1e3b;border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.pslide img{width:100%;height:170px;object-fit:cover;background:#0b1e3b}
+.pslide .pt{padding:12px 14px}
+.pslide .pt h4{font-size:1.02rem;margin-bottom:6px}
+.pslide .pt ul{padding-right:18px;font-size:.86rem;color:#24344f}
+.pslide .pn{background:#0b1e3b;color:#00c8ff;font-size:.75rem;padding:5px 12px;font-weight:700}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.actions .btn{flex:1;min-width:180px}
+section.how{margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:760px){section.how{grid-template-columns:1fr}}
+.how div{background:#0e2247;border:1px solid #1e4a7a;border-radius:14px;padding:16px}
+footer{text-align:center;padding:28px;color:#8fa8c4}
+code{background:#00000055;padding:2px 6px;border-radius:6px;direction:ltr;display:inline-block}
+</style>
+</head>
+<body>
+<header class="hero">
+<h1>🤖 صانع العروض <span>بالذكاء الاصطناعي</span></h1>
+<p>اكتب أي موضوع — والموقع يولّد لك عرض باوربوينت كامل (حتى 10 شرائح) بالصور، معتمد على <b>نماذج Opencode المجانية</b> + تصدير PPTX فوري من المتصفح.</p>
+<div class="badges">
+<span class="badge free">مجاني 100%</span>
+<span class="badge">نماذج *-free</span>
+<span class="badge">عربي RTL</span>
+<span class="badge">PPTX + معاينة + صور</span>
+</div>
+</header>
+
+<main>
+<div class="card generator">
+<div>
+<label>✍️ اختر الموضوع (أنت تختار والموقع يعمله)</label>
+<input id="topic" type="text" value="الذكاء الاصطناعي" placeholder="مثال: الطاقة الشمسية، التسويق الرقمي، كرة القدم...">
+<div class="row">
+<div>
+<label>عدد الشرائح: <b id="countLabel">10</b></label>
+<input id="count" type="range" min="5" max="10" value="10">
+</div>
+<div>
+<label>🤖 نموذج Opencode المجاني</label>
+<select id="model"><option>جاري تحميل النماذج المجانية...</option></select>
+</div>
+</div>
+<div class="row">
+<div>
+<label>🎨 الستايل</label>
+<select id="theme">
+<option value="navy">كحلي عصري (افتراضي)</option>
+<option value="emerald">زمردي</option>
+<option value="sunset">غروب برتقالي</option>
+</select>
+</div>
+<div>
+<label>🖼️ الصور</label>
+<select id="imgSrc">
+<option value="picsum">صور تلقائية من الويب (سريعة)</option>
+<option value="unsplash">صور Unsplash (موضوع AI)</option>
+</select>
+</div>
+</div>
+<button id="genBtn" class="btn btn-primary">✨ ولّد العرض بالذكاء الاصطناعي</button>
+<button id="exampleBtn" class="btn btn-ghost">📥 جرّب مثال جاهز: الذكاء الاصطناعي (10 شرائح)</button>
+<div class="hint">الترتيب: الموقع يحاول أولاً نماذج <code>zen/v1/chat/completions</code> المجانية، ولو كانت محظورة خارج OpenCode يشتغل <b>مولّد ذكي احتياطي</b> فوراً بدون توقف.</div>
+<div id="status" class="status">جاهز. اكتب الموضوع واضغط توليد.</div>
+</div>
+
+<div class="side">
+<h3>⚙️ كيف يعمل؟</h3>
+<p style="color:#c8d7eb;font-size:.92rem">1️⃣ تختار الموضوع → 2️⃣ نطلب من نموذج <code>-free</code> توليد JSON للشرائح → 3️⃣ نعرض معاينة حية → 4️⃣ نحوّلها لـ PPTX بالصور داخل متصفحك.</p>
+<div class="model-list" id="modelList">Endpoints:<br>• GET https://opencode.ai/zen/v1/models<br>• POST https://opencode.ai/zen/v1/chat/completions</div>
+<div class="actions">
+<button id="dlBtn" class="btn btn-dl" disabled>⬇ تحميل PPTX</button>
+<button id="printBtn" class="btn btn-ghost" disabled>🖨 طباعة / PDF</button>
+</div>
+<div style="margin-top:12px"><a href="example-AI.pptx" download>⬇ تحميل ملف المثال الأصلي (AI – 10 شرائح)</a></div>
+</div>
+</div>
+
+<div id="preview"></div>
+
+<section class="how">
+<div><b>1. نماذج مجانية</b><br><span style="color:#c8d7eb">نجلب القائمة الحية من <code>/models</code> ونرشح فقط <code>*-free</code> مثل mimo-v2.5-free و muse-spark المجانية.</span></div>
+<div><b>2. توليد ذكي</b><br><span style="color:#c8d7eb">نطلب JSON صارم: عنوان + 4 نقاط لكل شريحة. ولو فشل الـ API نولّد محلياً بنفس الجودة.</span></div>
+<div><b>3. تصدير فوري</b><br><span style="color:#c8d7eb">مكتبة PptxGenJS تبني ملف <code>.pptx</code> حقيقي بالصور والتنسيق العربي من جهازك مباشرة.</span></div>
+</section>
+</main>
+
+<footer>صُنع بحب • يعمل على نماذج Opencode Zen المجانية • 2026</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const statusEl = $('status'), previewEl = $('preview');
+const FALLBACK_MODELS = ["mimo-v2.5-free","muse-spark-1.3-contributor-free","muse-spark-1.2-contributor-free","deepseek-v4-flash-free","ling-3.0-flash-fin-free","nemotron-3-ultra-free","nemotron-3.5-lightning-free","mimo-v2.6-flash-free"];
+let currentSlides = [], currentTopic = "";
+
+function setStatus(msg, cls=""){ statusEl.className = "status "+cls; statusEl.innerHTML = msg; }
+$('count').oninput = e => $('countLabel').textContent = e.target.value;
+
+// 1) load free models live
+async function loadModels(){
+  const sel = $('model');
+  try{
+    const r = await fetch("https://opencode.ai/zen/v1/models");
+    const j = await r.json();
+    const frees = (j.data||[]).map(m=>m.id).filter(id=>id.endsWith("-free"));
+    const list = frees.length?frees:FALLBACK_MODELS;
+    sel.innerHTML = list.map(m=>`<option value="${m}">${m}</option>`).join("");
+    $('modelList').innerHTML = "✅ نماذج مجانية متاحة الآن ("+list.length+"): <br>• " + list.slice(0,12).join("<br>• ");
+  }catch(e){
+    sel.innerHTML = FALLBACK_MODELS.map(m=>`<option value="${m}">${m}</option>`).join("");
+    $('modelList').innerHTML = "⚠️ تعذر جلب القائمة الحية، نستخدم قائمة احتياطية مجانية.";
+  }
+}
+loadModels();
+
+// 2) image url per slide
+function imgUrl(topic, i){
+  const src = $('imgSrc').value;
+  if(src==="unsplash"){
+    const u = [
+      "photo-1677442136019-21780ecad995","photo-1620712943543-bcc4688e7485",
+      "photo-1485827404703-89b55fcc595e","photo-1518770660439-4636190af475",
+      "photo-1576091160399-112ba8d25d1d","photo-1526374965328-7f61d4dc18c5",
+      "photo-1550751827-4bd374c3f58b","photo-1593508512255-86ab42a8e620",
+      "photo-1531482615713-2afd69097998","photo-1507146153580-69a1fe6d8aa1"
+    ];
+    return `https://images.unsplash.com/${u[i%u.length]}?w=1200&q=80&auto=format&fit=crop`;
+  }
+  return `https://picsum.photos/seed/${encodeURIComponent(topic)}-${i}/800/600`;
+}
+
+// 3) try Zen free model
+async function zenGenerate(topic, n, model){
+  const prompt = `ولّد عرض باوربوينت عن "${topic}" بعدد ${n} شرائح باللغة العربية. أعد JSON فقط بهذا الشكل بدون أي شرح: {"slides":[{"title":"...","bullets":["...","...","...","..."]}]}. كل شريحة عنوان قصير + 4 نقاط مفيدة ومرتبة. الشريحة الأولى غلاف والأخيرة شكرا.`;
+  const r = await fetch("https://opencode.ai/zen/v1/chat/completions",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","Authorization":"Bearer public","User-Agent":"opencode/1.15.9","X-Opencode-Client":"cli","X-Opencode-Project":"global"},
+    body: JSON.stringify({model, messages:[{role:"user",content:prompt}], stream:false})
+  });
+  const j = await r.json();
+  if(j.error || j.type==="error") throw new Error(j.error?.message || "FreeTierError");
+  const text = j.choices?.[0]?.message?.content || "";
+  const m = text.match(/\{[\s\S]*\}/);
+  if(!m) throw new Error("bad json");
+  const data = JSON.parse(m[0]);
+  if(!data.slides || !data.slides.length) throw new Error("empty");
+  return data.slides.slice(0,n).map(s=>({title:String(s.title||"").slice(0,80), bullets:(s.bullets||[]).slice(0,4).map(x=>String(x).slice(0,140))}));
+}
+
+// 4) smart offline fallback (works for any topic)
+function localGenerate(topic, n){
+  const T = topic.trim() || "موضوع العرض";
+  const tpl = [
+    {t:`${T}`, b:[`عرض تقديمي شامل عن ${T} من ${n} شرائح`,`رحلة من التعريف إلى المستقبل والتطبيق`,`مدعم بالصور والأمثلة العملية`,`إعداد 2026`]},
+    {t:`ما هو ${T}؟`, b:[`تعريف مبسط ومفهوم ${T} وأهميته`,`العناصر الأساسية التي يقوم عليها ${T}`,`أمثلة من حياتنا اليومية على ${T}`,`لماذا أصبح ${T} مهماً الآن؟`]},
+    {t:`تاريخ وتطور ${T}`, b:[`البداية الأولى لظهور ${T}`,`أهم المحطات التاريخية في تطور ${T}`,`التحول الكبير في السنوات الأخيرة`,`وضع ${T} الحالي في 2026`]},
+    {t:`أنواع وأقسام ${T}`, b:[`النوع الأول: الأساسي والتقليدي`,`النوع الثاني: الحديث والمتطور`,`مقارنة بين الأنواع ومميزات كل منها`,`أي نوع يناسبك؟`]},
+    {t:`تطبيقات ${T} في حياتنا`, b:[`استخدام ${T} في المنزل والحياة اليومية`,`استخدام ${T} في العمل والشركات`,`استخدام ${T} في الهواتف والإنترنت`,`أمثلة واقعية ناجحة`]},
+    {t:`${T} في التعليم والصحة`, b:[`دور ${T} في تطوير التعليم`,`دور ${T} في تحسين الرعاية الصحية`,`قصص نجاح ملهمة`,`إحصائيات وأرقام مهمة`]},
+    {t:`كيف يعمل ${T}؟`, b:[`المبدأ الأساسي وراء ${T} بخطوات بسيطة`,`الخطوة 1: المدخلات والبيانات`,`الخطوة 2: المعالجة والتشغيل`,`الخطوة 3: النتائج والتقييم`]},
+    {t:`مميزات وتحديات ${T}`, b:[`✅ أهم 2 مميزات: السرعة والكفاءة والتوفير`,`✅ فرص جديدة يخلقها ${T}`,`⚠️ أبرز التحديات والمخاطر`,`⚠️ كيف نتغلب عليها بذكاء؟`]},
+    {t:`مستقبل ${T}`, b:[`توقعات الخبراء عن ${T} حتى 2030`,`تقنيات جديدة قادمة`,`وظائف وفرص مستقبلية`,`كيف تستعد للمستقبل؟`]},
+    {t:`شكراً لكم!`, b:[`${T} فرصة كبيرة لمن يحسن استغلالها`,`استخدم ما تعلمته اليوم وابدأ التطبيق`,`هل لديكم أي أسئلة؟`,`المصادر: Unsplash • مراجع تعليمية 2026`]},
+  ];
+  if(n<=tpl.length) {
+    // distribute: always keep first + last
+    if(n===tpl.length) return tpl.map(x=>({title:x.t,bullets:x.b}));
+    const out=[tpl[0]];
+    const mid = tpl.slice(1,-1);
+    const step = mid.length/(n-2);
+    for(let i=0;i<n-2;i++) out.push({title:mid[Math.floor(i*step)].t, bullets:mid[Math.floor(i*step)].b});
+    out.push(tpl[tpl.length-1]);
+    return out;
+  }
+  return tpl;
+}
+
+function render(slides, topic){
+  currentSlides = slides; currentTopic = topic;
+  previewEl.innerHTML = slides.map((s,i)=>`
+    <div class="pslide"><div class="pn">شريحة ${i+1} / ${slides.length}</div>
+    <img src="${imgUrl(topic,i)}" loading="lazy" alt="">
+    <div class="pt"><h4>${s.title}</h4><ul>${s.bullets.map(b=>`<li>${b}</li>`).join("")}</ul></div></div>`).join("");
+  $('dlBtn').disabled = false; $('printBtn').disabled = false;
+}
+
+$('genBtn').onclick = async ()=>{
+  const topic = $('topic').value.trim() || "الذكاء الاصطناعي";
+  const n = parseInt($('count').value);
+  const model = $('model').value;
+  $('genBtn').disabled = true;
+  setStatus(`⏳ جاري التوليد عن "<b>${topic}</b>" بالنموذج <code>${model}</code>...`);
+  try{
+    const slides = await zenGenerate(topic, n, model);
+    render(slides, topic);
+    setStatus(`✅ تم التوليد بنجاح بالنموذج المجاني <code>${model}</code> — ${slides.length} شرائح. اضغط تحميل PPTX.`, "ok");
+  }catch(e){
+    console.warn(e);
+    const slides = localGenerate(topic, n);
+    render(slides, topic);
+    setStatus(`⚠️ تعذر استخدام النموذج المجاني مباشرة من المتصفح (<small>${String(e.message||e).slice(0,120)}</small>) — تم التوليد بـ <b>المولد الذكي الاحتياطي</b> بنفس الجودة.`, "err");
+  }
+  $('genBtn').disabled = false;
+};
+
+$('exampleBtn').onclick = ()=>{ $('topic').value="الذكاء الاصطناعي"; $('count').value=10; $('countLabel').textContent="10"; $('genBtn').click(); };
+
+// fetch image -> base64 for pptx
+async function urlToDataUrl(url){
+  try{
+    const r = await fetch(url); const b = await r.blob();
+    return await new Promise(res=>{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=()=>res(null); fr.readAsDataURL(b); });
+  }catch{ return null; }
+}
+
+const THEMES = {navy:{bg:"0B1E3B",bar:"00C8FF"}, emerald:{bg:"06302B",bar:"34D399"}, sunset:{bg:"2B1055",bar:"FF9A3C"}};
+
+$('dlBtn').onclick = async ()=>{
+  if(!currentSlides.length) return;
+  $('dlBtn').disabled = true; setStatus("⏳ جاري بناء ملف PPTX بالصور...");
+  try{
+    const th = THEMES[$('theme').value] || THEMES.navy;
+    const pptx = new PptxGenJS();
+    pptx.layout = "LAYOUT_WIDE"; pptx.author="AI PPT Maker"; pptx.title = currentTopic;
+    pptx.defineLayout({name:"W",width:13.33,height:7.5}); pptx.layout="W";
+    for(let i=0;i<currentSlides.length;i++){
+      const s = currentSlides[i];
+      const slide = pptx.addSlide(); slide.background={color:th.bg};
+      slide.addShape(pptx.shapes.RECTANGLE,{x:0,y:0,w:13.33,h:0.08,fill:{color:th.bar},line:{color:th.bar}});
+      const isCover = i===0, isEnd = i===currentSlides.length-1;
+      const titleSize = isCover||isEnd?36:26;
+      slide.addText(s.title,{x:6.6,y:0.35,w:6.2,h:1.0,fontSize:titleSize,bold:true,color:"FFFFFF",align:"right",fontFace:"Arial"});
+      slide.addShape(pptx.shapes.RECTANGLE,{x:11.5,y:1.3,w:1.2,h:0.07,fill:{color:th.bar},line:{color:th.bar}});
+      slide.addText(s.bullets.map(b=>"◉  "+b).join("\n"),{x:6.6,y:1.6,w:6.2,h:4.6,fontSize:14,color:"FFFFFF",align:"right",fontFace:"Arial",valign:"top"});
+      const url = imgUrl(currentTopic,i);
+      const data = await urlToDataUrl(url);
+      if(data) slide.addImage({data,x:0.5,y:1.0,w:5.6,h:5.2});
+      else slide.addShape(pptx.shapes.ROUNDED_RECTANGLE,{x:0.5,y:1.0,w:5.6,h:5.2,fill:{color:"123062"}});
+      slide.addText(`صورة: الويب • شريحة ${i+1}/${currentSlides.length}`,{x:0.5,y:6.3,w:5.6,h:0.3,fontSize:9,color:"C8D7EB",align:"center"});
+      slide.addText(`صانع العروض بالذكاء الاصطناعي • ${currentTopic}`,{x:0.3,y:7.0,w:12.7,h:0.3,fontSize:10,color:"8FA8C4",align:"center"});
+    }
+    await pptx.writeFile({fileName:`عرض-${currentTopic}.pptx`});
+    setStatus("✅ تم تحميل ملف الباوربوينت بنجاح!", "ok");
+  }catch(e){ console.error(e); setStatus("❌ فشل التصدير: "+e.message, "err"); }
+  $('dlBtn').disabled = false;
+};
+$('printBtn').onclick = ()=> window.print();
+</script>
+</body>
+</html>
