@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HTTP Injector (App) — Payload Lab</title>
+<style>
+  :root { color-scheme: dark; --bg:#0b1020; --card:#151d38; --accent:#4da3ff; --ok:#34d399; --muted:#93a0c0; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#eaf0ff; }
+  header { padding:28px 20px 12px; text-align:center; }
+  header h1 { margin:0 0 6px; font-size:28px; }
+  header p { margin:0; color:var(--muted); }
+  main { max-width:980px; margin:0 auto; padding:16px 20px 48px; display:grid; gap:16px; grid-template-columns: 1fr 1fr; }
+  @media (max-width:760px){ main{ grid-template-columns:1fr; } }
+  .card { background:var(--card); border:1px solid #26325c; border-radius:14px; padding:16px; }
+  .card h2 { margin:0 0 10px; font-size:16px; }
+  label { display:block; font-size:12px; color:var(--muted); margin:10px 0 4px; }
+  input,select,textarea { width:100%; padding:10px; border-radius:10px; border:1px solid #2c3a6b; background:#0d1430; color:#eaf0ff; font-size:14px; }
+  textarea { min-height:150px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12.5px; }
+  .row { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  button { padding:10px 14px; border-radius:10px; border:0; background:var(--accent); color:#06122b; font-weight:700; cursor:pointer; }
+  button.ghost { background:transparent; border:1px solid #35508f; color:#cfe0ff; }
+  .chips { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .chip { font-size:12px; padding:6px 10px; border-radius:999px; background:#0d1430; border:1px solid #2c3a6b; color:#cfe0ff; }
+  .status { margin-top:10px; font-size:13px; color:var(--ok); min-height:20px; }
+  footer { text-align:center; color:var(--muted); font-size:12px; padding:0 0 28px; }
+  ul { margin:8px 0 0 18px; padding:0; color:#cdd8f5; font-size:14px; line-height:1.6; }
+</style>
+</head>
+<body>
+<header>
+  <h1>HTTP Injector (App)</h1>
+  <p>Payload generator &amp; tunnel config lab — SSH / SSL / WS / Shadowsocks / V2Ray</p>
+</header>
+<main>
+  <section class="card">
+    <h2>Payload Generator</h2>
+    <label for="method">Request method</label>
+    <select id="method">
+      <option>CONNECT</option>
+      <option>GET</option>
+      <option>POST</option>
+      <option>HEAD</option>
+      <option>DELETE</option>
+    </select>
+    <label for="host">Spoof / front host</label>
+    <input id="host" value="example.com" />
+    <label for="port">Remote port</label>
+    <input id="port" value="443" inputmode="numeric" />
+    <label for="mode">Inject mode</label>
+    <select id="mode">
+      <option value="normal">Normal</option>
+      <option value="front">Front Inject</option>
+      <option value="back">Back Inject</option>
+      <option value="front-query">Front Query</option>
+      <option value="back-query">Back Query</option>
+    </select>
+    <div class="row">
+      <button id="generate" type="button">Generate Payload</button>
+      <button id="copy" type="button" class="ghost">Copy</button>
+    </div>
+    <div class="status" id="status" role="status"></div>
+  </section>
+  <section class="card">
+    <h2>Generated Payload</h2>
+    <textarea id="output" readonly></textarea>
+    <div class="chips">
+      <span class="chip">SSH + Proxy</span>
+      <span class="chip">SSL/TLS</span>
+      <span class="chip">DNS Tunnel</span>
+      <span class="chip">VLESS / VMess</span>
+      <span class="chip">WireGuard</span>
+    </div>
+  </section>
+  <section class="card">
+    <h2>Tunnel Types</h2>
+    <ul>
+      <li>HTTP Proxy + SSH — custom headers, SNI spoof</li>
+      <li>SSL (TLS) / STunnel — port 443 wrapped</li>
+      <li>WebSocket + CDN fronting</li>
+      <li>Shadowsocks / V2Ray / Hysteria</li>
+      <li>DNS tunnel (DNSTT / SlowDNS)</li>
+    </ul>
+  </section>
+  <section class="card">
+    <h2>How To Use</h2>
+    <ul>
+      <li>1. Pick CONNECT + your front host.</li>
+      <li>2. Press Generate Payload.</li>
+      <li>3. Import into your SSH / V2Ray client.</li>
+      <li>4. Connect and browse privately.</li>
+    </ul>
+  </section>
+</main>
+<footer>Static demo for capture validation — no network calls, renders offline.</footer>
+<script>
+function buildPayload(){
+  var method = document.getElementById('method').value;
+  var host = (document.getElementById('host').value || 'example.com').trim();
+  var port = (document.getElementById('port').value || '443').trim();
+  var mode = document.getElementById('mode').value;
+  var hp = '[host_port]';
+  var real = host + ':' + port;
+  var CRLF = '[crlf]';
+  var out = '';
+  if (mode === 'normal') out = method + ' ' + hp + ' HTTP/1.1' + CRLF + 'Host: ' + host + CRLF + CRLF;
+  else if (mode === 'front') out = 'GET http://' + host + '/ HTTP/1.1' + CRLF + 'Host: ' + host + CRLF + CRLF + method + ' ' + hp + ' HTTP/1.1' + CRLF + CRLF;
+  else if (mode === 'back') out = method + ' ' + hp + ' HTTP/1.1' + CRLF + CRLF + 'GET http://' + host + '/ HTTP/1.1' + CRLF + 'Host: ' + host + CRLF + CRLF;
+  else if (mode === 'front-query') out = method + ' ' + host + '@' + hp + CRLF + 'GET http://' + host + '/ HTTP/1.1' + CRLF + 'Host: ' + host + CRLF + CRLF;
+  else out = method + ' ' + hp + '@' + host + CRLF + 'GET http://' + host + '/ HTTP/1.1' + CRLF + 'Host: ' + host + CRLF + CRLF;
+  out += '\n# resolves to ' + real;
+  return out;
+}
+function render(){
+  document.getElementById('output').value = buildPayload();
+  var s = document.getElementById('status');
+  s.textContent = 'Payload ready — ' + document.getElementById('method').value + ' via ' + document.getElementById('host').value;
+}
+document.getElementById('generate').addEventListener('click', render);
+document.getElementById('copy').addEventListener('click', function(){
+  var t = document.getElementById('output');
+  t.select();
+  try { document.execCommand('copy'); } catch(e){}
+  try { navigator.clipboard && navigator.clipboard.writeText(t.value); } catch(e){}
+  document.getElementById('status').textContent = 'Copied to clipboard.';
+});
+['method','host','port','mode'].forEach(function(id){
+  document.getElementById(id).addEventListener('input', render);
+  document.getElementById(id).addEventListener('change', render);
+});
+render();
+</script>
+</body>
+</html>
